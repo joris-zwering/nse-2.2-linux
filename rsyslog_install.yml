@@ -1,0 +1,17 @@
+---
+- hosts: control
+  become: yes
+  remote_user: azureuser
+  tasks:
+  - name: Package Installation
+    apt:
+      name: rsyslog
+      update_cache: yes
+  - name: Configuration copy
+    copy:
+      src: rsyslog.conf
+      dest: /etc/rsyslog.conf
+  - name: Restart rsyslog
+    ansible.builtin.service:
+      name: rsyslog
+      state: restarted
